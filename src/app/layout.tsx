@@ -35,10 +35,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SmoothScroll>
-            {children}
-            <div className="grain-overlay" />
-          </SmoothScroll>
+          <SmoothScroll />
+          {children}
+          <div className="grain-overlay" />
         </ThemeProvider>
       </body>
     </html>
