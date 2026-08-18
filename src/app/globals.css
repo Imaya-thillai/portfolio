@@ -17,8 +17,7 @@
 }
 
 html {
-  /* lenis handles smooth scrolling, but keeping this as fallback */
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
