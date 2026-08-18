@@ -7,6 +7,8 @@ interface AnimatedTextProps {
   className?: string
   delay?: number
   once?: boolean
+  as?: 'div' | 'h1' | 'h2' | 'h3' | 'p'
+  animate?: boolean // true = play immediately, false = play on scroll
 }
 
 export default function AnimatedText({
@@ -14,29 +16,39 @@ export default function AnimatedText({
   className = '',
   delay = 0,
   once = true,
+  as = 'div',
+  animate: playImmediately = false,
 }: AnimatedTextProps) {
   const words = text.split(' ')
+
+  const containerProps = playImmediately
+    ? {
+        initial: 'hidden' as const,
+        animate: 'visible' as const,
+      }
+    : {
+        initial: 'hidden' as const,
+        whileInView: 'visible' as const,
+        viewport: { once, margin: '-30px' },
+      }
 
   return (
     <motion.div
       className={`flex flex-wrap ${className}`}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: '-50px' }}
+      {...containerProps}
     >
       {words.map((word, i) => (
         <motion.span
           key={i}
           className="inline-block mr-[0.25em]"
           variants={{
-            hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
+            hidden: { opacity: 0, y: 20 },
             visible: {
               opacity: 1,
               y: 0,
-              filter: 'blur(0px)',
               transition: {
-                duration: 0.5,
-                delay: delay + i * 0.06,
+                duration: 0.45,
+                delay: delay + i * 0.05,
                 ease: [0.25, 0.4, 0.25, 1],
               },
             },

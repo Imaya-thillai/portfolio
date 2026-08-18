@@ -70,6 +70,7 @@ export default function Hero() {
           text={heroContent.name}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight justify-center leading-[1.05]"
           delay={0.25}
+          animate
         />
 
         {/* Tagline */}

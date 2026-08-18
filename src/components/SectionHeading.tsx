@@ -22,7 +22,7 @@ export default function SectionHeading({
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
+        viewport={{ once: true, margin: '-20px' }}
         transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
         className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100"
       >
@@ -33,7 +33,7 @@ export default function SectionHeading({
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
+          viewport={{ once: true, margin: '-20px' }}
           transition={{
             duration: 0.6,
             delay: 0.15,
