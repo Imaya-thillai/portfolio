@@ -50,11 +50,9 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 text-center px-6 md:px-12 lg:px-24 w-full max-w-[1440px] w-full mx-auto">
         {/* Status badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.03] dark:bg-white/[0.03] backdrop-blur-sm mb-10"
+        <div
+          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.03] dark:bg-white/[0.03] backdrop-blur-sm mb-10 opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '0.1s' }}
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -63,50 +61,36 @@ export default function Hero() {
           <span className="text-sm text-neutral-600 dark:text-neutral-400">
             Open to opportunities
           </span>
-        </motion.div>
+        </div>
 
         {/* Name */}
-        <AnimatedText
-          text={heroContent.name}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight justify-center leading-[1.05]"
-          delay={0.1}
-          animate
-        />
+        <div 
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight justify-center leading-[1.05] opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '0.2s' }}
+        >
+          {heroContent.name}
+        </div>
 
         {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            delay: 0.3,
-            ease: [0.25, 0.4, 0.25, 1],
-          }}
-          className="text-lg sm:text-xl md:text-2xl text-neutral-700 dark:text-neutral-300 mt-6 max-w-2xl mx-auto"
+        <p
+          className="text-lg sm:text-xl md:text-2xl text-neutral-700 dark:text-neutral-300 mt-6 max-w-2xl mx-auto opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '0.3s' }}
         >
           {heroContent.tagline}
-        </motion.p>
+        </p>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            delay: 0.45,
-            ease: [0.25, 0.4, 0.25, 1],
-          }}
-          className="text-sm md:text-base text-neutral-500 mt-4 max-w-lg mx-auto leading-relaxed"
+        <p
+          className="text-sm md:text-base text-neutral-500 mt-4 max-w-lg mx-auto leading-relaxed opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '0.4s' }}
         >
           {heroContent.subtitle}
-        </motion.p>
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-10"
+        <div
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-10 opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '0.5s' }}
         >
           <MagneticButton
             href="#projects"
@@ -120,7 +104,7 @@ export default function Hero() {
           >
             {heroContent.cta2}
           </MagneticButton>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}

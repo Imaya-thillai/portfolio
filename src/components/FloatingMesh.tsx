@@ -1,13 +1,23 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
 
 export default function FloatingMesh() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(
+      window.innerWidth < 768 ||
+      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    )
+  }, [])
 
   const init = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+    // Skip canvas entirely on mobile
+    if (isMobile) return
 
     const ctx = canvas.getContext('2d')
     if (!ctx) return
@@ -35,8 +45,7 @@ export default function FloatingMesh() {
     }
 
     const createParticles = () => {
-      const isMobile = window.innerWidth < 768
-      const count = isMobile ? 50 : 120
+      const count = 80
       particles = []
 
       for (let i = 0; i < count; i++) {
@@ -44,19 +53,25 @@ export default function FloatingMesh() {
         particles.push({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          size: Math.random() * 2 + 0.8,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 2 + 0.5,
           opacity: baseOpacity,
           baseOpacity,
         })
       }
     }
 
+    resize()
+    createParticles()
+
+    window.addEventListener('resize', resize)
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX
       mouseY = e.clientY
     }
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
     const animate = () => {
       const w = window.innerWidth
@@ -74,12 +89,11 @@ export default function FloatingMesh() {
         if (p.y < 0) p.y = h
         if (p.y > h) p.y = 0
 
-        // React to mouse — simple proximity
         const dxMouse = mouseX - p.x
         const dyMouse = mouseY - p.y
         const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse
         let mouseInfluence = 0
-        if (distMouseSq < 40000) { // 200 * 200
+        if (distMouseSq < 40000) {
           mouseInfluence = 1 - Math.sqrt(distMouseSq) / 200
         }
         p.opacity = p.baseOpacity + mouseInfluence * 0.4
@@ -88,31 +102,28 @@ export default function FloatingMesh() {
         const r = isDark ? 129 : 99
         const g = isDark ? 140 : 102
         const b = isDark ? 248 : 241
-        
+
         const coreR = isDark ? 165 : 79
         const coreG = isDark ? 180 : 70
         const coreB = isDark ? 252 : 229
 
-        // Fast glow (2 transparent circles instead of expensive radial gradient)
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${p.opacity * 0.15})`
         ctx.fill()
 
-        // Solid core
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(${coreR}, ${coreG}, ${coreB}, ${p.opacity})`
         ctx.fill()
 
-        // Draw connections (Optimized distance check)
         for (let j = i + 1; j < particles.length; j++) {
           const q = particles[j]
           const dx = q.x - p.x
           const dy = q.y - p.y
           const distSq = dx * dx + dy * dy
 
-          if (distSq < 22500) { // 150 * 150
+          if (distSq < 22500) {
             const dist = Math.sqrt(distSq)
             const alpha = (isDark ? 0.08 : 0.12) * (1 - dist / 150)
             ctx.beginPath()
@@ -128,24 +139,22 @@ export default function FloatingMesh() {
       animationId = requestAnimationFrame(animate)
     }
 
-    resize()
-    createParticles()
     animate()
 
-    window.addEventListener('resize', () => { resize(); createParticles() })
-    window.addEventListener('mousemove', handleMouseMove, { passive: true })
-
     return () => {
-      window.removeEventListener('resize', () => { resize(); createParticles() })
+      window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(animationId)
     }
-  }, [])
+  }, [isMobile])
 
   useEffect(() => {
     const cleanup = init()
     return cleanup
   }, [init])
+
+  // Don't render canvas on mobile at all
+  if (isMobile) return null
 
   return (
     <canvas
