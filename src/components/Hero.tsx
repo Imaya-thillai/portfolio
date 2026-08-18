@@ -69,7 +69,7 @@ export default function Hero() {
         <AnimatedText
           text={heroContent.name}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight justify-center leading-[1.05]"
-          delay={0.25}
+          delay={0.1}
           animate
         />
 
@@ -79,7 +79,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.6,
-            delay: 0.85,
+            delay: 0.3,
             ease: [0.25, 0.4, 0.25, 1],
           }}
           className="text-lg sm:text-xl md:text-2xl text-neutral-700 dark:text-neutral-300 mt-6 max-w-2xl mx-auto"
@@ -93,7 +93,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.6,
-            delay: 1.05,
+            delay: 0.45,
             ease: [0.25, 0.4, 0.25, 1],
           }}
           className="text-sm md:text-base text-neutral-500 mt-4 max-w-lg mx-auto leading-relaxed"
@@ -105,7 +105,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.3 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-10"
         >
           <MagneticButton
@@ -127,7 +127,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 1 }}
+        transition={{ delay: 1.0, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
       >
         <motion.div
